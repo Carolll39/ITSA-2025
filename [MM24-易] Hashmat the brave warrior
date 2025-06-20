@@ -3,9 +3,12 @@
 using namespace std;
 
 int main() {
-    unsigned long long a, b;
+    unsigned long long a, b;  // Use unsigned long long to handle large inputs (up to 2^32 and beyond)
 
+    // Read pairs of numbers until End Of File (EOF)
     while (cin >> a >> b) {
+        // Compute the absolute difference between the two numbers
+        // Cast to signed long long first to safely use abs() on potentially large unsigned values
         cout << abs((long long)a - (long long)b) << endl;
     }
 
