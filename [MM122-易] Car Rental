@@ -1,0 +1,40 @@
+#include <iostream>
+using namespace std;
+
+bool canAfford(long long D, long long f, long long d, long long p, long long x) {
+    long long extra_days = (D > f) ? (D - f) : 0;
+    
+    long long cost = extra_days * p;
+    if (cost > d) return false;
+    
+    if (D > (1e9)) return false; 
+    if (x != 0 && D > (d - cost) / x) return false; 
+
+    cost += D * x;
+    return cost <= d;
+}
+
+int main() {
+    int T;
+    cin >> T;
+    while (T--) {
+        long long f, d, p, x;
+        cin >> f >> d >> p >> x;
+
+        long long left = 0, right = 1e9;
+        long long answer = 0;
+
+        while (left <= right) {
+            long long mid = (left + right) / 2;
+            if (canAfford(mid, f, d, p, x)) {
+                answer = mid;
+                left = mid + 1;
+            } else {
+                right = mid - 1;
+            }
+        }
+
+        cout << answer << endl;
+    }
+    return 0;
+}
