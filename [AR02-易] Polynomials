@@ -1,36 +1,52 @@
-#include <iostream>
-#include <vector>
+#include <iostream>     
+#include <vector>       
+
 using namespace std;
 
+// This function multiplies two polynomials represented as coefficient vectors
+// For example, if poly1 = {c0, c1, c2} represents c0 + c1*x + c2*x^2
+// and poly2 = {d0, d1} represents d0 + d1*x
+// then the result will be their product as another coefficient vector
 vector<int> multiply(const vector<int>& poly1, const vector<int>& poly2) {
+    // Initialize result vector to the correct size: degree(m + n) + 1
     vector<int> result(poly1.size() + poly2.size() - 1, 0);
 
+    // Perform polynomial multiplication (convolution)
     for (size_t i = 0; i < poly1.size(); ++i) {
         for (size_t j = 0; j < poly2.size(); ++j) {
+            // Multiply coefficients and add to the corresponding power index
             result[i + j] += poly1[i] * poly2[j];
         }
     }
 
-    return result;
+    return result; // Return the resulting polynomial
 }
 
 int main() {
     int a, b, c, d;
+    // (ax^2 + bx + c)^d will be computed
     cin >> a >> b >> c >> d;
 
+    // Represent the base polynomial (ax^2 + bx + c) as a vector of coefficients
+    // Stored in increasing order of power: constant term to highest degree
+    // poly = {c, b, a} means c + bx + ax^2
     vector<int> poly = {c, b, a};
 
+    // Start with the multiplicative identity polynomial: 1
+    // This is equivalent to (ax^2 + bx + c)^0 = 1
     vector<int> result = {1};
 
+    // Raise the base polynomial to the d-th power by repeated multiplication
     for (int i = 0; i < d; ++i) {
-        result = multiply(result, poly);
+        result = multiply(result, poly); // Multiply result by the base polynomial
     }
 
+    // Output the coefficients in descending order of powers
+    // i.e., highest degree coefficient first (x^2d ... constant)
     for (int i = result.size() - 1; i >= 0; --i) {
         cout << result[i];
-        if (i != 0) cout << " ";
+        if (i != 0) cout << " "; 
     }
     cout << endl;
-
     return 0;
 }
