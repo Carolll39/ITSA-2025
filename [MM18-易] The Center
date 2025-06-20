@@ -14,30 +14,38 @@ double distance(const Point& a, const Point& b) {
 
 int main() {
     int N;
-    cin >> N;
-    vector<Point> points(N);
+    cin >> N;  // Read number of points
 
+    vector<Point> points(N);  // Store all input points
+
+    // Read each point's coordinates
     for (int i = 0; i < N; ++i) {
         cin >> points[i].x >> points[i].y;
     }
 
+    // Start with a very large offset (infinity) so any real value will be smaller
     double min_offset = numeric_limits<double>::max();
-    Point center = points[0];
+    Point center = points[0];  // Default center is the first point (may change later)
 
     for (int i = 0; i < N; ++i) {
-        double max_dist = 0;
+        double max_dist = 0;  // Maximum distance from point i to any other point
+
         for (int j = 0; j < N; ++j) {
             if (i != j) {
+                // Update max_dist with the farthest point from point[i]
                 max_dist = max(max_dist, distance(points[i], points[j]));
             }
         }
 
+        // If this point has a smaller offset than previously found
+        // Or, if it ties in offset but has a smaller x or y (tie-breaking rule)
         if (max_dist < min_offset ||
-           (abs(max_dist - min_offset) < 1e-8 && (
-                points[i].x < center.x || 
-               (points[i].x == center.x && points[i].y < center.y)))) {
-            min_offset = max_dist;
-            center = points[i];
+            (abs(max_dist - min_offset) < 1e-8 && (
+                points[i].x < center.x ||
+                (points[i].x == center.x && points[i].y < center.y)))) {
+
+            min_offset = max_dist;     // Update minimum offset found
+            center = points[i];        // Update best center candidate
         }
     }
 
