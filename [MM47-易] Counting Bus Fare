@@ -1,0 +1,20 @@
+#include <iostream>
+using namespace std;
+
+int main() {
+    int numAdults, fareAdults;
+    int numChildren, fareChildren;
+    int numSeniors, fareSeniors;
+
+    cin >> numAdults >> fareAdults;
+    cin >> numChildren >> fareChildren;
+    cin >> numSeniors >> fareSeniors;
+
+    int totalFare = (numAdults * fareAdults) +
+                    (numChildren * fareChildren) +
+                    (numSeniors * fareSeniors);
+
+    cout << totalFare << endl;
+
+    return 0;
+}
