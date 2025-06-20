@@ -5,13 +5,16 @@ int main() {
     int N, M;
     std::cin >> N >> M;
 
-    std::string strN = std::to_string(N);
-    std::string strM = std::to_string(M);
+    std::string strN = std::to_string(N); // Convert N to string
+    std::string strM = std::to_string(M); // Convert M to string
 
-    int count = 0;
+    int count = 0;  // Initialize counter to zero
+
+    // Loop over each position in M where a substring of length 2 can start
     for (size_t i = 0; i <= strM.length() - strN.length(); ++i) {
+        // Check if substring starting at index i of length equal to N matches N
         if (strM.substr(i, strN.length()) == strN) {
-            count++;
+            count++;  // If match found, increment the count
         }
     }
 
