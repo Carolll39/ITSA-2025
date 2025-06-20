@@ -1,37 +1,49 @@
-#include <iostream>
-#include <vector>
-#include <sstream>
-#include <algorithm>
-#include <iomanip>
+#include <iostream>      
+#include <vector>       
+#include <sstream>     
+#include <algorithm>    
+#include <iomanip>      
 using namespace std;
 
 int main() {
-    string line;
-    getline(cin, line); 
+    string line;             // Variable to hold the input line
+    getline(cin, line);      // Read the full line of integers from input
 
-    stringstream ss(line);
-    vector<int> numbers;
+    stringstream ss(line);   // Create a string stream to parse integers from the input line
+    vector<int> numbers;     // Vector to store all the integers from the input
     int num;
+
+    // Read integers from the stream and store them in the vector
     while (ss >> num) {
         numbers.push_back(num);
     }
 
+    // Sort the vector in ascending order so we can find the middle elements
     sort(numbers.begin(), numbers.end());
-    int n = numbers.size();
+    int n = numbers.size();  // Total number of elements in the list
 
     double median;
+
+    // If the number of elements is odd, take the middle element
     if (n % 2 == 1) {
         median = numbers[n / 2];
-    } else {
+    } 
+    // If even, compute the average of the two middle elements
+    else {
         median = (numbers[n / 2 - 1] + numbers[n / 2]) / 2.0;
     }
 
+    // Output the result in the required format
     cout << "Median=";
+
+    // If median is an integer (e.g., 10.0), print as integer
     if (median == static_cast<int>(median)) {
         cout << static_cast<int>(median) << endl;
-    } else {
+    } 
+    // If median is a decimal, print with 1 decimal place
+    else {
         cout << fixed << setprecision(1) << median << endl;
     }
 
-    return 0;
+    return 0; // Indicate successful program termination
 }
