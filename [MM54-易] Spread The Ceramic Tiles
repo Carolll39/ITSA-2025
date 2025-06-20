@@ -1,27 +1,37 @@
-#include <iostream>
+#include <iostream> 
 using namespace std;
 
 int main() {
-    int n;
-    cin >> n;
+    int n; // Input: the length of the 2×n wall
+    cin >> n; // Read the user's input
 
+    // If n is not a positive number, it's invalid based on the problem statement
     if (n <= 0) {
-        cout << 0 << endl;
-        return 0;
+        cout << 0 << endl; // No way to tile a non-positive-length wall
+        return 0; // Exit the program
     }
 
+    // Base case: For a 2×1 wall, there's only 1 way to tile it — using one vertical tile
     if (n == 1) {
         cout << 1 << endl;
         return 0;
     }
 
-    int a = 1, b = 2, result = 0;
+    // Initialize base values for Fibonacci-like recurrence:
+    // a = f(n-2), b = f(n-1), result = f(n)
+    int a = 1; // f(1) = 1 (1 way to tile a 2×1 wall)
+    int b = 2; // f(2) = 2 (2 ways: two vertical tiles or two horizontal stacked tiles)
+    int result = 0;
+
+    // Loop from i = 3 up to n to compute f(n)
     for (int i = 3; i <= n; ++i) {
-        result = a + b;
-        a = b;
-        b = result;
+        result = a + b; // f(n) = f(n-1) + f(n-2)
+        a = b;          // Move the window: f(n-2) becomes f(n-1)
+        b = result;     // f(n-1) becomes f(n)
     }
 
+    // Output the result (b holds the value of f(n))
     cout << b << endl;
-    return 0;
+
+    return 0; // Exit successfully
 }
