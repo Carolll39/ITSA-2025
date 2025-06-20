@@ -1,0 +1,37 @@
+#include <iostream>
+#include <vector>
+#include <sstream>
+#include <algorithm>
+#include <iomanip>
+using namespace std;
+
+int main() {
+    string line;
+    getline(cin, line); 
+
+    stringstream ss(line);
+    vector<int> numbers;
+    int num;
+    while (ss >> num) {
+        numbers.push_back(num);
+    }
+
+    sort(numbers.begin(), numbers.end());
+    int n = numbers.size();
+
+    double median;
+    if (n % 2 == 1) {
+        median = numbers[n / 2];
+    } else {
+        median = (numbers[n / 2 - 1] + numbers[n / 2]) / 2.0;
+    }
+
+    cout << "Median=";
+    if (median == static_cast<int>(median)) {
+        cout << static_cast<int>(median) << endl;
+    } else {
+        cout << fixed << setprecision(1) << median << endl;
+    }
+
+    return 0;
+}
