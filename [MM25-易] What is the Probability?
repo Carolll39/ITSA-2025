@@ -4,20 +4,29 @@
 using namespace std;
 
 int main() {
-    int S;
+    int S;               // Number of test cases
     cin >> S;
 
     while (S--) {
-        int N, I;
-        double p;
+        int N, I;        // N = total players, I = index of the player to evaluate
+        double p;        // p = probability of success in a single throw
         cin >> N >> p >> I;
 
-        double q = 1 - p;
+        double q = 1 - p; // q = probability of failure in a single throw
+
+        // Calculate the probability that the I-th player wins
+        // Formula:
+        // P = (p * q^(I-1)) / (1 - q^N)
+        //
+        // Explanation:
+        // - The I-th player wins in the k-th full round if all previous (k-1)*N + (I-1) players failed.
+        // - This forms a geometric series, and the result is the formula above.
         double numerator = p * pow(q, I - 1);
         double denominator = 1 - pow(q, N);
 
         double result = numerator / denominator;
 
+        // Output the result with exactly 4 decimal places
         cout << fixed << setprecision(4) << result << endl;
     }
 
