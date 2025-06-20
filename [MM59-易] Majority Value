@@ -1,38 +1,44 @@
-#include <iostream>
-#include <sstream>
-#include <unordered_map>
-#include <vector>
+#include <iostream>       
+#include <sstream>        
+#include <unordered_map>  
+#include <vector>        
 using namespace std;
 
 int main() {
-    string line;
+    string line; // Variable to hold each line of input
+
+    // Loop to read input until EOF (multiple test cases allowed)
     while (getline(cin, line)) {
-        istringstream iss(line);
+        istringstream iss(line); // Create string stream from the input line
         int num;
-        unordered_map<int, int> freq;
-        vector<int> numbers;
-    
+        unordered_map<int, int> freq; // Hash map to store frequency of each number
+        vector<int> numbers;          // Vector to store the input sequence in order
+
+        // Read all numbers from the current input line
         while (iss >> num) {
-            numbers.push_back(num);
-            freq[num]++;
+            numbers.push_back(num); // Store number in the list
+            freq[num]++;            // Increment frequency count in the map
         }
 
-        int n = numbers.size();
-        int threshold = n / 2;
-        bool found = false;
+        int n = numbers.size();     // Total number of elements
+        int threshold = n / 2;      // Minimum required frequency for majority
+        bool found = false;         // Flag to check if a majority is found
 
+        // Iterate through the frequency map to find a majority element
         for (auto &p : freq) {
+            // If an element appears at least n/2 times, it's a majority
             if (p.second >= threshold) {
                 cout << "Majority is " << p.first << endl;
                 found = true;
-                break;
+                break; // Stop once majority is found
             }
         }
 
+        // If no majority element was found, print "No Majority"
         if (!found) {
             cout << "No Majority" << endl;
         }
     }
 
-    return 0;
+    return 0; // End of program
 }
