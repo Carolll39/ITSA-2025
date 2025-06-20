@@ -1,0 +1,31 @@
+#include <iostream>
+#include <cmath>
+#include <iomanip>
+using namespace std;
+
+double f(double x) {
+    return x * x + 4 * sin(x) + 7;
+}
+
+int main() {
+    int n;
+    double x, dx;
+    cin >> n >> x >> dx;
+
+    cout << fixed << setprecision(6);
+
+    for (int i = 0; i < n; ++i) {
+        double f_x_plus_dx = f(x + dx);
+        double f_x = f(x);
+        double f_x_minus_dx = f(x - dx);
+
+        double msec = (f_x_plus_dx - f_x) / dx;
+        double mchord = (f_x_plus_dx - f_x_minus_dx) / (2 * dx);
+
+        cout << dx << " " << msec << " " << mchord << endl;
+
+        dx /= 2.0; 
+    }
+
+    return 0;
+}
