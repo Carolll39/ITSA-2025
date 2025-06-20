@@ -6,26 +6,30 @@ using namespace std;
 
 int main() {
     int T; 
-    cin >> T;
+    cin >> T; // Number of test cases
 
     while (T--) {
         int r; 
-        cin >> r;
+        cin >> r; // Number of relatives
 
         vector<int> streets(r);
         for (int i = 0; i < r; ++i) {
-            cin >> streets[i];
+            cin >> streets[i]; // Street numbers of relatives
         }
 
+        // Sort the street numbers to find the median
         sort(streets.begin(), streets.end());
-        int median = streets[r / 2]; 
+
+        // The median minimizes sum of absolute distances
+        // For even number of elements, this is still valid as we pick r/2-th element (0-based)
+        int median = streets[r / 2];
 
         int totalDistance = 0;
         for (int i = 0; i < r; ++i) {
-            totalDistance += abs(streets[i] - median);
+            totalDistance += abs(streets[i] - median); // Calculate total distance to median
         }
 
-        cout << totalDistance << endl;
+        cout << totalDistance << endl; // Output minimal sum of distances
     }
 
     return 0;
