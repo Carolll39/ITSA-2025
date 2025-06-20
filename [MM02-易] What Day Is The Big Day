@@ -2,25 +2,38 @@
 using namespace std;
 
 int getDayOfWeek(int y, int m, int d) {
+    // If the month is January or February, treat it as month 13 or 14 of the previous year
+    // This adjustment is part of Zeller's Congruence formula
     if (m == 1 || m == 2) {
-        m += 12;
-        y -= 1;
+        m += 12;    // January becomes 13, February becomes 14
+        y -= 1;     // Go back one year, since Jan/Feb are treated as part of previous year
     }
-    int K = y % 100;
-    int J = y / 100;
+
+    int K = y % 100;  // K is the year within the century (last two digits of year)
+    int J = y / 100;  // J is the century part of the year (first two digits of year)
+
+    // Zeller’s Congruence formula to calculate the day of the week
+    // h = 0 means Saturday, 1 = Sunday, ..., 6 = Friday
     int h = (d + 13 * (m + 1) / 5 + K + K / 4 + J / 4 + 5 * J) % 7;
 
+    // Convert Zeller's output (0 = Saturday ... 6 = Friday)
+    // to required output (1 = Sunday ... 7 = Saturday)
+    // Example: h = 6 (Friday) → ((6 + 6) % 7) + 1 = 6 (Friday)
     int day = ((h + 6) % 7) + 1;
-    return day;
+
+    return day;  // Return the day number in required format
 }
 
 int main() {
-    int T;
-    cin >> T;
+    int T;          // Number of test cases
+    cin >> T;       // Read number of test cases from input
+
+    // Loop through all test cases
     while (T--) {
-        int Y, M, D;
-        cin >> Y >> M >> D;
-        cout << getDayOfWeek(Y, M, D) << endl;
+        int Y, M, D;            // Variables to store year, month, and day
+        cin >> Y >> M >> D;     // Read each date from input
+        cout << getDayOfWeek(Y, M, D) << endl;  // Print result of day-of-week calculation
     }
-    return 0;
+
+    return 0;  // Indicate successful program execution
 }
