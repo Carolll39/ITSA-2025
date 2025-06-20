@@ -3,28 +3,36 @@
 #include <iomanip>
 using namespace std;
 
+// Function f(x) as defined: f(x) = x^2 + 4*sin(x) + 7
 double f(double x) {
     return x * x + 4 * sin(x) + 7;
 }
 
 int main() {
-    int n;
-    double x, dx;
-    cin >> n >> x >> dx;
+    int n;          // Number of iterations
+    double x, dx;   // x: the point at which slope is calculated, dx: initial step size
+    cin >> n >> x >> dx;  // Read inputs: n, x, and dx
 
+    // Set output format to fixed-point notation with 6 decimal places
     cout << fixed << setprecision(6);
 
     for (int i = 0; i < n; ++i) {
+        // Calculate function values at x+dx, x, and x-dx
         double f_x_plus_dx = f(x + dx);
         double f_x = f(x);
         double f_x_minus_dx = f(x - dx);
 
+        // Calculate the slope using the secant formula: (f(x+dx) - f(x)) / dx
         double msec = (f_x_plus_dx - f_x) / dx;
+
+        // Calculate the slope using the chord formula: (f(x+dx) - f(x-dx)) / (2 * dx)
         double mchord = (f_x_plus_dx - f_x_minus_dx) / (2 * dx);
 
+        // Output the current dx, msec, and mchord values
         cout << dx << " " << msec << " " << mchord << endl;
 
-        dx /= 2.0; 
+        // Halve dx for the next iteration to see convergence behavior
+        dx /= 2.0;
     }
 
     return 0;
