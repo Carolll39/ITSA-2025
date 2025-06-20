@@ -1,27 +1,40 @@
-#include <iostream>
-#include <cmath>
+#include <iostream>  
+#include <cmath>     
+
 using namespace std;
 
+// Function to decompose the number N into N = A * B^2
+// where A is square-free and B is a positive integer
 void decompose(int N) {
-    int A = N;
-    int B = 1;
+    int A = N;  // Start with A = N
+    int B = 1;  // B is initialized to 1
 
+    // Iterate over possible square divisors i^2
+    // Only go up to sqrt(A) since i^2 > A means it can't divide A
     for (int i = 2; i * i <= A; ++i) {
-        int count = 0;
+        // While A is divisible by i^2, divide it out and multiply B by i
         while (A % (i * i) == 0) {
-            A /= i * i;
-            B *= i;
+            A /= i * i;  // Remove the square factor from A
+            B *= i;      // Accumulate the square root part into B
         }
     }
 
+    // At the end of the loop, A is guaranteed to be square-free
+    // and B^2 contains all the square factors originally in N
     cout << N << " = " << A << "*" << B << "^2" << endl;
 }
 
 int main() {
     int N;
+
+    // Keep reading integers from input until EOF (end-of-file)
     while (cin >> N) {
+        // Only process valid input range (1 < N < 10^9)
         if (N <= 1 || N >= 1000000000) continue;
+
+        // Decompose the number
         decompose(N);
     }
-    return 0;
+
+    return 0; 
 }
