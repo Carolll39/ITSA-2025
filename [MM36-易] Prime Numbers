@@ -1,0 +1,31 @@
+#include <iostream>
+#include <vector>
+using namespace std;
+
+const int MAX_N = 30000;
+
+int main() {
+
+    vector<bool> isPrime(MAX_N, true);
+    isPrime[0] = isPrime[1] = false;
+
+    for (int i = 2; i * i < MAX_N; ++i) {
+        if (isPrime[i]) {
+            for (int j = i * i; j < MAX_N; j += i) {
+                isPrime[j] = false;
+            }
+        }
+    }
+
+    vector<int> primeCount(MAX_N, 0);
+    for (int i = 1; i < MAX_N; ++i) {
+        primeCount[i] = primeCount[i - 1] + (isPrime[i] ? 1 : 0);
+    }
+
+    int N;
+    while (cin >> N && N != 0) {
+        cout << primeCount[N - 1] << endl;
+    }
+
+    return 0;
+}
