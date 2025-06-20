@@ -1,0 +1,54 @@
+#include <iostream>
+#include <iomanip>
+using namespace std;
+
+bool isLeap(int year) {
+    return (year % 4 == 0 && year % 100 != 0) || (year % 400 == 0);
+}
+
+int getDaysInMonth(int year, int month) {
+    if (month == 2) {
+        return isLeap(year) ? 29 : 28;
+    }
+    
+    if (month == 1 || month == 3 || month == 5 || month == 7 ||
+        month == 8 || month == 10 || month == 12) {
+        return 31;
+    }
+    
+    return 30;
+}
+
+int main() {
+    int year, month, startDay;
+    cin >> year >> month >> startDay;
+
+    if (year < 1000 || year > 3000 || month < 1 || month > 12 || startDay < 0 || startDay > 6) {
+        cout << "invalid" << endl;
+        return 0;
+    }
+
+    int daysInMonth = getDaysInMonth(year, month);
+
+    cout << " Su Mo Tu We Th Fr Sa\n";
+    cout << "=====================\n";
+
+    int day = 1;
+
+    for (int i = 0; i < startDay; ++i) {
+        cout << "   ";
+    }
+
+    for (int i = startDay; day <= daysInMonth; ++i) {
+        cout << setw(3) << day;
+        ++day;
+
+        if (i == 6 && day <= daysInMonth) { 
+            cout << '\n';
+            i = -1; 
+        }
+    }
+
+    cout << "\n=====================" << endl;
+    return 0;
+}
