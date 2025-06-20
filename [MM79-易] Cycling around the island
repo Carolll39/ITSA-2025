@@ -1,0 +1,47 @@
+#include <iostream>
+#include <iomanip>
+#include <cmath>
+using namespace std;
+
+int main() {
+    int speed;
+
+    while (cin >> speed) {
+        if (speed <= 0 || speed >= 200) continue;
+
+        double rate = (speed <= 60) ? 5.0 : 5.0 + (speed - 60) * 0.5;
+
+        double tank_hours = 5.0 / rate;
+
+        double tank_range = speed * tank_hours;
+
+        if (tank_range < 20.0) {
+            cout << "Mission Failure" << endl;
+            continue;
+        }
+
+        int distance = 395;
+        int gas_stations = 0;
+        double fuel = 5.0;
+        double time = 0.0;
+
+        for (int i = 0; i < distance; i += 20) {
+            double segment = (i + 20 <= distance) ? 20 : (distance - i);
+            double time_needed = segment / speed;
+            double fuel_needed = rate * time_needed;
+
+            if (fuel < fuel_needed) {
+                fuel = 5.0;
+                time += 5.0 / 60;  
+                gas_stations++;
+            }
+
+            fuel -= fuel_needed;
+            time += time_needed;
+        }
+
+        cout << fixed << setprecision(2) << round(time * 100) / 100.0 << endl;
+    }
+
+    return 0;
+}
