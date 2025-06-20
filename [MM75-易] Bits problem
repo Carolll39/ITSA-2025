@@ -1,0 +1,13 @@
+#include <iostream>
+#include <bitset>
+using namespace std;
+
+int main() {
+    int n;
+    while (cin >> n) {
+        int masked = (n & 0b11110000) >> 4;
+        bitset<4> bits(masked);
+        cout << bits.to_string() << endl;
+    }
+    return 0;
+}
