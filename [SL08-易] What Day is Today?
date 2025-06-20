@@ -1,0 +1,61 @@
+#include <iostream>
+#include <string>
+using namespace std;
+
+int daysInMonth(int year, int month) {
+    
+    int days[] = {31, 28, 31, 30, 31, 30,
+                  31, 31, 30, 31, 30, 31};
+    
+    if (month == 2) {
+        if ((year % 400 == 0) || (year % 4 == 0 && year % 100 != 0))
+            return 29;
+    }
+    return days[month - 1];
+}
+
+bool isValidDate(int year, int month, int day) {
+    if (year < 2000 || month < 1 || month > 12 || day < 1)
+        return false;
+    return day <= daysInMonth(year, month);
+}
+
+int countDaysFrom2000(int year, int month, int day) {
+    int days = 0;
+
+    for (int y = 2000; y < year; ++y) {
+        days += 365;
+        if ((y % 400 == 0) || (y % 4 == 0 && y % 100 != 0))
+            days += 1;
+    }
+
+    for (int m = 1; m < month; ++m) {
+        days += daysInMonth(year, m);
+    }
+
+    days += day - 1; 
+
+    return days;
+}
+
+int main() {
+    int n;
+    cin >> n;
+
+    string week[] = {"Saturday", "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday"};
+
+    for (int i = 0; i < n; ++i) {
+        int y, m, d;
+        cin >> y >> m >> d;
+
+        if (!isValidDate(y, m, d)) {
+            cout << "invalid date" << endl;
+            continue;
+        }
+
+        int offset = countDaysFrom2000(y, m, d);
+        cout << week[offset % 7] << endl;
+    }
+
+    return 0;
+}
