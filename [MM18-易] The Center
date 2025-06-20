@@ -1,0 +1,46 @@
+#include <iostream>
+#include <vector>
+#include <cmath>
+#include <limits>
+using namespace std;
+
+struct Point {
+    int x, y;
+};
+
+double distance(const Point& a, const Point& b) {
+    return sqrt((a.x - b.x) * 1.0 * (a.x - b.x) + (a.y - b.y) * 1.0 * (a.y - b.y));
+}
+
+int main() {
+    int N;
+    cin >> N;
+    vector<Point> points(N);
+
+    for (int i = 0; i < N; ++i) {
+        cin >> points[i].x >> points[i].y;
+    }
+
+    double min_offset = numeric_limits<double>::max();
+    Point center = points[0];
+
+    for (int i = 0; i < N; ++i) {
+        double max_dist = 0;
+        for (int j = 0; j < N; ++j) {
+            if (i != j) {
+                max_dist = max(max_dist, distance(points[i], points[j]));
+            }
+        }
+
+        if (max_dist < min_offset ||
+           (abs(max_dist - min_offset) < 1e-8 && (
+                points[i].x < center.x || 
+               (points[i].x == center.x && points[i].y < center.y)))) {
+            min_offset = max_dist;
+            center = points[i];
+        }
+    }
+
+    cout << center.x << " " << center.y << endl;
+    return 0;
+}
