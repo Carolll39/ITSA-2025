@@ -1,23 +1,31 @@
-#include <iostream>
+#include <iostream> 
 using namespace std;
 
+// Function to compute the factorial of a non-negative integer n
 int factorial(int n) {
-    int result = 1;
+    int result = 1; // Initialize result to 1, since 0! and 1! = 1
+
+    // Loop from 2 to n, multiplying result by each i
+    // No need to multiply by 0 or 1
     for (int i = 2; i <= n; ++i) {
-        result *= i;
+        result *= i; // Multiply result by current value of i
     }
-    return result;
+
+    return result; // Return the computed factorial
 }
 
 int main() {
-    int M;
-    cin >> M;
+    int M; // Number of test cases
+    cin >> M; // Read the number of input cases
 
+    // Process each test case
     for (int i = 0; i < M; ++i) {
-        int n;
-        cin >> n;
+        int n; // The value for which we will compute the factorial
+        cin >> n; // Read the input value n (0 ≤ n ≤ 12)
+
+        // Call the factorial function and print the result
         cout << factorial(n) << endl;
     }
 
-    return 0;
+    return 0; // Indicate successful program termination
 }
