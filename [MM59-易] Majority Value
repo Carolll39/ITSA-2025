@@ -1,0 +1,38 @@
+#include <iostream>
+#include <sstream>
+#include <unordered_map>
+#include <vector>
+using namespace std;
+
+int main() {
+    string line;
+    while (getline(cin, line)) {
+        istringstream iss(line);
+        int num;
+        unordered_map<int, int> freq;
+        vector<int> numbers;
+    
+        while (iss >> num) {
+            numbers.push_back(num);
+            freq[num]++;
+        }
+
+        int n = numbers.size();
+        int threshold = n / 2;
+        bool found = false;
+
+        for (auto &p : freq) {
+            if (p.second >= threshold) {
+                cout << "Majority is " << p.first << endl;
+                found = true;
+                break;
+            }
+        }
+
+        if (!found) {
+            cout << "No Majority" << endl;
+        }
+    }
+
+    return 0;
+}
