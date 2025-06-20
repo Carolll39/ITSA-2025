@@ -1,0 +1,39 @@
+#include <iostream>
+#include <vector>
+#include <algorithm>
+using namespace std;
+
+int main() {
+    int n;
+    while (cin >> n && n != 0) {
+        vector<int> enemies(n);
+        vector<int> soldiers(n);
+        
+        for (int i = 0; i < n; ++i)
+            cin >> enemies[i];
+        
+        for (int i = 0; i < n; ++i)
+            cin >> soldiers[i];
+
+        sort(enemies.begin(), enemies.end());
+        sort(soldiers.begin(), soldiers.end());
+
+        int enemy_ptr = 0;
+        int soldier_ptr = 0;
+        int wins = 0;
+
+        while (enemy_ptr < n && soldier_ptr < n) {
+            if (soldiers[soldier_ptr] > enemies[enemy_ptr]) {
+                ++wins;
+                ++enemy_ptr;
+                ++soldier_ptr;
+            } else {
+                ++soldier_ptr;
+            }
+        }
+
+        cout << wins << endl;
+    }
+
+    return 0;
+}
