@@ -1,14 +1,19 @@
-#include <iostream>
-#include <vector>
-#include <string>
-#include <algorithm>
+#include <iostream>      
+#include <vector>        
+#include <string>        
+#include <algorithm>     
+
 using namespace std;
 
+
 struct Team {
-    int number;
-    int score;
+    int number;  // Team number: 1, 2, or 3
+    int score;   // Accumulated score
 };
 
+// Comparison function used for sorting
+// Sort primarily by descending score
+// If scores are the same, sort by ascending team number
 bool compare(const Team &a, const Team &b) {
     if (a.score != b.score)
         return a.score > b.score; 
@@ -16,36 +21,49 @@ bool compare(const Team &a, const Team &b) {
 }
 
 int main() {
-    int n;
+    int n;           // Number of trivia problems/rounds
     cin >> n;
-    cin.ignore(); 
+    cin.ignore();    // Clear the newline character after reading integer
 
+    // Initialize 3 teams with their respective team numbers and starting scores = 0
     vector<Team> teams = {{1, 0}, {2, 0}, {3, 0}};
 
+    // Loop through each round of questions
     for (int i = 0; i < n; ++i) {
         string result1, result2, result3;
+        // Read result of each team for the current question
         cin >> result1 >> result2 >> result3;
 
+        // Store results in a vector 
         vector<string> results = {result1, result2, result3};
+
+        // For each team, apply scoring based on their result
         for (int j = 0; j < 3; ++j) {
             if (results[j] == "correct")
-                teams[j].score += 10;
+                teams[j].score += 10;   // +10 for correct answer
             else if (results[j] == "wrong")
-                teams[j].score -= 10;
+                teams[j].score -= 10;   // -10 for wrong answer
+            // give-up means 0 points
         }
     }
 
+    // Sort teams based on score (descending), break ties with team number (ascending)
     sort(teams.begin(), teams.end(), compare);
 
+    // Output scores in grouped format:
+    // Teams with same score printed on same line, sorted by team number
     for (int i = 0; i < 3; ) {
         int j = i;
+        // Find how many teams share the same score starting from index i
         while (j < 3 && teams[j].score == teams[i].score) j++;
 
+        // Print all teams from index i to j-1 (same score group)
         for (int k = i; k < j; ++k) {
             cout << "(" << teams[k].number << "," << teams[k].score << ")";
         }
         cout << endl;
-        i = j;
+
+        i = j;  // Move to the next group of different score
     }
 
     return 0;
